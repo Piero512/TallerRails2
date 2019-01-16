@@ -2,14 +2,14 @@ module Ratings
     class API < Grape::API
         format :json
         get do
-            View.all()
+            Rating.all()
         end
         params do
             requires :id, type: Integer, desc: "ID usuario"
         end
         get ':id' do
             begin
-                product = View.find(params[:id])
+                product = Rating.find(params[:id])
             rescue ActiveRecord::RecordNotFound
                 error!({ status: :not_found }, 404)
             end
@@ -21,7 +21,7 @@ module Ratings
         
         get "by/:id" do
             begin
-                query = View.where(user_id: params[:id])
+                query = Rating.where(user_id: params[:id])
                 unless !query.empty?
                     error!({status: :not_found}, 404)
                 end
@@ -34,7 +34,7 @@ module Ratings
         
         put ':id' do 
             begin
-                vista = View.find(params[:id])
+                vista = Rating.find(params[:id])
                 if vista.update({
                 date: params[:date],
                 rating: params[:rating],
