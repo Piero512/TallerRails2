@@ -63,3 +63,10 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Adding Grape for APIs
 gem "grape"
+
+# Adding washOut for WDSL
+gem "wash_out"
+
+# Adding Savon to consume SOAP API
+
+gem "savon"

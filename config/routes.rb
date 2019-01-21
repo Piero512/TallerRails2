@@ -6,5 +6,10 @@ Rails.application.routes.draw do
   mount Movies::API => "/api/movies"
   get "/top10" => "top10#index" 
   root "top10#index"
+  wash_out :plan
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
+
+
+
+
