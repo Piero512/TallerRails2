@@ -36,18 +36,18 @@ test_user2 = User.create({username: "user2",
 pelis = Movie.distinct.first(10)
 pelis2 = Movie.distinct.last(10)
 
-for i in 0...pelis.length
-    Rating.create({
-    rating: 10,
-    user_id: test_user.id,
-    movie_id: pelis[i].id
-    })
-end
+(0...pelis.length).each {|i|
+  Rating.create({
+                    rating: 10,
+                    user_id: test_user.id,
+                    movie_id: pelis[i].id
+                })
+}
 
-for j in 0...pelis2.length
-    Rating.create({
-    rating: j+1,
-    user_id: test_user2.id,
-    movie_id: pelis2[j].id
-    })
-end
+(0...pelis2.length).each {|j|
+  Rating.create({
+                    rating: j + 1,
+                    user_id: test_user2.id,
+                    movie_id: pelis2[j].id
+                })
+}
