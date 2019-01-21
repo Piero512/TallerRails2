@@ -6,5 +6,12 @@ module Movies
     get do
       pelis = Movie.all
     end
+
+    get ':id' do
+      params do
+        requires :id, type: Integer
+      end
+      vista = Movie.find(params[:id])
+    end
   end
 end

@@ -13,7 +13,7 @@ module Ratings
       begin
         product = Rating.find(params[:id])
       rescue ActiveRecord::RecordNotFound
-        error!({status: :not_found}, 404)
+        error!({ status: :not_found }, 404)
       end
     end
 
@@ -24,7 +24,7 @@ module Ratings
     get 'by/:id' do
       begin
         query = Rating.where(user_id: params[:id])
-        error!({status: :not_found}, 404) if query.empty?
+        error!({ status: :not_found }, 404) if query.empty?
         present query
       end
     end
@@ -33,18 +33,35 @@ module Ratings
       begin
         vista = Rating.find(params[:id])
         if vista.update(
-          date: params[:date],
           rating: params[:rating],
           user_id: params[:user_id],
           movie_id: params[:movie_id]
         )
-          {status: :success}
+          { status: :success }
         else
-          error!(status: :error, message: vista.errors.full_messages.first) if product.errors.any?
+          error!(status: :error, message: vista.errors.full_messages.first) if vista.errors.any?
         end
       rescue ActiveRecord::RecordNotFound
-        error!({status: :error, message: :not_found}, 404)
+        error!({ status: :error, message: :not_found }, 404)
       end
     end
+    post do
+      params do
+        requires :rating, type: Integer, desc: 'Rating de la pelicula', values: (1..10)
+        requires :user_id, type: Integer, desc: 'UserID'
+        requires :movie_id, type: Integer, desc: 'MovieID'
+      end
+      rate = Rating.create(
+        rating: params[:rating],
+        user_id: params[:user_id],
+        movie_id: params[:movie_id]
+      )
+      if rate.valid?
+        { status: :success }
+      else
+        error!(status: :error, message: rate.errors.full_messages.first) if rate.errors.any?
+      end
+    end
+
   end
 end
