@@ -17,6 +17,7 @@ csv_object.each do |row|
          plan: "basico"
         })
     end
+
 test_user = User.create({username: "user1", 
             pass: "pass1",
             dob: Date.parse("1998/02/03"),
