@@ -4,7 +4,8 @@ class Api::RatingsController < ApplicationController
   # GET /ratings
   # GET /ratings.json
   def index
-    @ratings = Rating.all
+    @ratings = Rating.joins(:movie).select('movies.id , movies.title , ratings.rating').where(user: 2)
+    @user = User.find(2)
     render json: @ratings
   end
 
@@ -32,7 +33,11 @@ class Api::RatingsController < ApplicationController
 # POST /ratings
   # POST /ratings.json
   def create
-    @rating = Rating.new(rating_params)
+    @movie = Movie.find(params[:idMovie])
+    @rating = Rating.new
+    @rating.rating = params[:rating].to_i
+    @rating.user = @user
+    @rating.movie = @movie
     if @rating.save
       render :json => @rating , :status => create , :location => @rating 
     else
@@ -43,7 +48,7 @@ class Api::RatingsController < ApplicationController
   # PATCH/PUT /ratings/1
   # PATCH/PUT /ratings/1.json
   def edit
-    if @rating.update(rating_params)
+    if @rating.update(:rating => params[:rating])
       render json: show, status: :ok, location: @rating 
     else
       render json: @rating.errors, status: :unprocessable_entity 
@@ -63,7 +68,5 @@ class Api::RatingsController < ApplicationController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def rating_params
-      params.require(:rating).permit(:rating, :user_id, :movie_id)
-    end
+
 end

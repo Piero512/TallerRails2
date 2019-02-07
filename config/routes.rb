@@ -15,7 +15,7 @@ Rails.application.routes.draw do
       get '/:id/edit.json' => 'api/ratings#edit'
       get '/:id/show.json'=> 'api/ratings#show'
       patch '/:id/update.json' => 'api/ratings#update'
-      put '/:id/update.json' => 'api/ratings#update'
+      put '/:id/edit.json' => 'api/ratings#edit'
       delete '/:id/destroy.json'=> 'api/ratings#destroy'
     end
   end
