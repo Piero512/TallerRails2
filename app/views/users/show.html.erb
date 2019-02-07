@@ -1,34 +1,24 @@
-<p id="notice"><%= notice %></p>
+<%= link_to "Log out", logout_path, :method => :delete %>
+<h1>Bienvenido!</h1>
+<h2>Información del usuario</h2>
+<ul>
+  <li> Username: <%= @user.username %></li>
+  <li> Fecha de nacimiento: <%= @user.dob %></li>
+  <li> Plan: <%= @user.plan %></li>
+  <li> Ciudad de residencia: <%= @user.city %></li>
+  <li> Pais: <%= @user.country %></li>
+</ul>
 
-<p>
-  <strong>Username:</strong>
-  <%= @user.username %>
-</p>
-
-<p>
-  <strong>Pass:</strong>
-  <%= @user.pass %>
-</p>
-
-<p>
-  <strong>Dob:</strong>
-  <%= @user.dob %>
-</p>
-
-<p>
-  <strong>Plan:</strong>
-  <%= @user.plan %>
-</p>
-
-<p>
-  <strong>City:</strong>
-  <%= @user.city %>
-</p>
-
-<p>
-  <strong>Country:</strong>
-  <%= @user.country %>
-</p>
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<table>
+  <tr>
+    <th>Movie</th>
+    <th>Rating</th>
+  </tr>
+ 
+  <% @ratingsUser.where(user: @user.id).each do |movie| %>
+    <tr>
+      <td><%= link_to movie.title.to_s , showMovie_path(:data => movie.title.to_s)%></td>
+      <td><%= movie.rating %></td>
+    </tr>
+  <% end %>
+</table>

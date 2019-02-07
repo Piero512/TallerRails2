@@ -1,0 +1,12 @@
+<%= link_to "Log out", logout_path, :method => :delete %>
+
+<h1>Información de la pelicula</h1>
+
+<%= @movies.where(title: params[:data]).each do |movie| %>
+    <ul>
+        <li>Titulo: <%= movie.title %></li>
+        <li>Director: <%= movie.director %></li>
+        <li>Cast: <%= movie.cast %></li>
+        <li>Plan: <%= movie.plan %></li>
+    </ul> 
+<% end %>

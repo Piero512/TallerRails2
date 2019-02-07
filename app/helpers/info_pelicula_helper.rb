@@ -1,0 +1,2 @@
+module InfoPeliculaHelper
+end

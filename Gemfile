@@ -75,3 +75,4 @@ gem 'wdm', '>= 0.1.0'
 # Adding Savon to consume SOAP API
 
 gem "savon"
+
