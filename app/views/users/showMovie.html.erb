@@ -2,7 +2,7 @@
 
 <h1>Información de la pelicula</h1>
 
-<%= @movies.where(title: params[:data]).each do |movie| %>
+<%= @movies.where(title: params[:data], id: 0..20).each do |movie| %>
     <ul>
         <li>Titulo: <%= movie.title %></li>
         <li>Director: <%= movie.director %></li>

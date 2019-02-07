@@ -1,11 +1,11 @@
 class Api::RatingsController < ApplicationController
+  skip_before_action :verify_authenticity_token
   before_action :set_rating, only: [:show, :edit, :update, :destroy]
 
   # GET /ratings
   # GET /ratings.json
   def index
-    @ratings = Rating.joins(:movie).select('movies.id , movies.title , ratings.rating').where(user: 2)
-    @user = User.find(2)
+    @ratings = Rating.joins(:movie).select('movies.id , movies.title , ratings.rating').where(user: 1)
     render json: @ratings
   end
 
@@ -15,44 +15,27 @@ class Api::RatingsController < ApplicationController
     render json: @rating
   end
 
-  # GET /ratings/new
-
-#  def new
-#    @rating = Rating.new
-#    @users = User.all
-#    @movies = Movie.all
-#  end
-  
-
-  # GET /ratings/1/edit
-#  def edit
-#    @users = User.all
-#    @movies = Movie.all
-#  end
-
-# POST /ratings
+  # POST /ratings
   # POST /ratings.json
   def create
-    @movie = Movie.find(params[:idMovie])
-    @rating = Rating.new
-    @rating.rating = params[:rating].to_i
-    @rating.user = @user
-    @rating.movie = @movie
+    @rating = Rating.new(:user_id => 1,:movie_id => params[:idMovie].to_i, :rating => params[:rating].to_i)
     if @rating.save
-      render :json => @rating , :status => create , :location => @rating 
+      puts "Creado"
     else
-      render json: @rating.errors, status: :unprocessable_entity 
+      puts "Error" 
     end
+    redirect_to root_path
   end
 
   # PATCH/PUT /ratings/1
   # PATCH/PUT /ratings/1.json
   def edit
-    if @rating.update(:rating => params[:rating])
-      render json: show, status: :ok, location: @rating 
+    if @rating.update(rating: params[:rating].to_i)
+      puts "Actualizado" 
     else
-      render json: @rating.errors, status: :unprocessable_entity 
+      puts "Error"
     end
+    redirect_to root_path
   end
 
   # DELETE /ratings/1
